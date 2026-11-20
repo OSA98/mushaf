@@ -110,5 +110,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/OSA98/mushaf.git"
-  }
+  },
+  "keywords": [
+    "quran",
+    "mushaf",
+    "القرآن",
+    "مصحف",
+    "tafsir",
+    "pwa",
+    "electron",
+    "capacitor"
+  ]
 }

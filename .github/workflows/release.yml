@@ -13,7 +13,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
-concurrency: { group: release-${{ github.ref }}, cancel-in-progress: false }
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   prepare:
     runs-on: ubuntu-latest
