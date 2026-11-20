@@ -1,0 +1,92 @@
+{
+  "name": "mushaf",
+  "private": true,
+  "version": "1.0.0",
+  "description": "مصحف — قراءة واستماع وتدبر القرآن الكريم (ويب، سطح المكتب، الجوال)",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "data": "node scripts/build-data.mjs",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "electron:dev": "ELECTRON_START_URL=http://localhost:5173 electron .",
+    "electron:build": "npm run build:native && electron-builder",
+    "cap:sync": "npm run build:native && cap sync",
+    "build:native": "tsc -b && vite build --mode native",
+    "electron:start": "npm run build:native && electron .",
+    "android": "npm run cap:sync && cap open android",
+    "ios": "npm run cap:sync && cap open ios",
+    "icons": "bash scripts/make-icons.sh"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^6.2.3",
+    "@capacitor/core": "^6.2.3",
+    "@capacitor/ios": "^6.2.3",
+    "@fontsource/ibm-plex-sans-arabic": "^5.3.0",
+    "adhan": "^4.4.6",
+    "quran-meta": "^7.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6",
+    "zustand": "^4.5.7"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.3",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
+    "playwright": "1.49",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21",
+    "vite-plugin-pwa": "^0.20.5"
+  },
+  "build": {
+    "appId": "org.mushaf.app",
+    "productName": "Mushaf",
+    "artifactName": "Mushaf-${version}-${os}-${arch}.${ext}",
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.reference"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Education"
+    },
+    "publish": [
+      {
+        "provider": "github"
+      }
+    ]
+  }
+}

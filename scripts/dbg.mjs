@@ -1,0 +1,10 @@
+import { chromium } from 'playwright'
+const browser = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] })
+const page = await browser.newPage({ viewport: { width: 390, height: 844 } })
+page.on('console', (m) => console.log('console', m.type(), m.text()))
+page.on('pageerror', (e) => console.log('PAGEERROR', e.message, e.stack?.slice(0, 400)))
+await page.addInitScript(() => localStorage.setItem('mushaf.settings', JSON.stringify({ state: { onboarded: true, theme: 'light' }, version: 1 })))
+await page.goto('http://localhost:4173/#/', { waitUntil: 'networkidle' })
+await page.waitForTimeout(1500)
+console.log(await page.evaluate(() => { const e = document.elementFromPoint(195, 400); const nav = document.querySelector('.bottom-nav'); return JSON.stringify({ sw: document.documentElement.scrollWidth, sh: document.documentElement.scrollHeight, sx: scrollX, sy: scrollY, el: e?.className, tag: e?.tagName, nav: nav?.getBoundingClientRect(), op: getComputedStyle(document.body).opacity }) }))
+await browser.close()
