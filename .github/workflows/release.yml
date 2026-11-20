@@ -1,9 +1,9 @@
-# Push a tag like v1.0.0 to build the desktop apps (Windows, macOS, Linux) and an Android APK,
-# and attach them to a GitHub Release.
+# Publish a GitHub Release (Releases → Draft a new release → tag vX.Y.Z matching package.json "version")
+# to build the desktop apps (Windows, macOS, Linux) and an Android APK and attach them to that release.
 name: Release apps
 on:
-  push:
-    tags: ['v*']
+  release:
+    types: [published]
   workflow_dispatch:
 permissions:
   contents: write

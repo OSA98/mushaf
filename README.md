@@ -43,7 +43,7 @@ npm run build        # الناتج في dist/ — ارفعه على أي است
 npm run electron:start   # تجربة
 npm run electron:build   # إنشاء المثبّت في release/
 ```
-أو ادفع وسمًا (tag) مثل `v1.0.0` وسيبني `release.yml` نسخ ويندوز وماك ولينكس ويرفعها في صفحة Releases.
+أو من صفحة الريبو: Releases ← Draft a new release ← اكتب وسم مثل `v1.0.0` (نفس رقم version في package.json) ← Publish، وسيبني `release.yml` نسخ ويندوز وماك ولينكس وملف APK ويرفعها في نفس الإصدار.
 
 ### ٣) الجوال (Capacitor)
 ```bash
