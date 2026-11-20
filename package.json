@@ -1,7 +1,7 @@
 {
   "name": "mushaf",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "مصحف — قراءة واستماع وتدبر القرآن الكريم (ويب، سطح المكتب، الجوال)",
   "type": "module",
   "main": "electron/main.cjs",
@@ -71,7 +71,8 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true
+      "createDesktopShortcut": true,
+      "artifactName": "Mushaf-${version}-windows-setup.${ext}"
     },
     "mac": {
       "target": [
@@ -100,7 +101,10 @@
         "repo": "mushaf",
         "releaseType": "release"
       }
-    ]
+    ],
+    "portable": {
+      "artifactName": "Mushaf-${version}-windows-portable.${ext}"
+    }
   },
   "homepage": "https://osa98.github.io/mushaf/",
   "repository": {

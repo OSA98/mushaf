@@ -1,14 +1,47 @@
-# Publish a GitHub Release (Releases → Draft a new release → tag vX.Y.Z matching package.json "version")
-# to build the desktop apps (Windows, macOS, Linux) and an Android APK and attach them to that release.
+# Builds the desktop apps (Windows, macOS, Linux) and an Android APK and attaches them to a GitHub Release.
+#
+# Two ways to release:
+#   1) Bump "version" in package.json and push to main → a release vX.Y.Z is created automatically.
+#   2) Or publish a release from the GitHub UI with a tag vX.Y.Z matching package.json.
 name: Release apps
 on:
+  push:
+    branches: [main]
+    paths: [package.json]
   release:
     types: [published]
   workflow_dispatch:
 permissions:
   contents: write
+concurrency: { group: release-${{ github.ref }}, cancel-in-progress: false }
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.v.outputs.tag }}
+      build: ${{ steps.v.outputs.build }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="v$VERSION"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          elif gh release view "$TAG" >/dev/null 2>&1; then
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "build=true" >> "$GITHUB_OUTPUT"; else echo "build=false" >> "$GITHUB_OUTPUT"; fi
+          else
+            gh release create "$TAG" --target "$GITHUB_SHA" --title "الإصدار $VERSION" \
+              --notes "نسخ ويندوز وماك ولينكس وأندرويد — تُضاف الملفات تلقائيًا خلال دقائق."
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          fi
+
   desktop:
+    needs: prepare
+    if: needs.prepare.outputs.build == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -25,7 +58,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Optional code signing (recommended for public distribution):
           # CSC_LINK / CSC_KEY_PASSWORD (Windows & macOS), APPLE_ID / APPLE_APP_SPECIFIC_PASSWORD / APPLE_TEAM_ID (macOS notarization)
+
   android:
+    needs: prepare
+    if: needs.prepare.outputs.build == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,8 +75,8 @@ jobs:
       - name: Build APK (debug-signed, for testing / direct download)
         working-directory: android
         run: ./gradlew assembleDebug
-      - name: Upload APK to the release
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+      - run: cp android/app/build/outputs/apk/debug/app-debug.apk "Mushaf-${{ needs.prepare.outputs.tag }}-android.apk"
+      - uses: softprops/action-gh-release@v2
         with:
-          files: android/app/build/outputs/apk/debug/*.apk
+          tag_name: ${{ needs.prepare.outputs.tag }}
+          files: Mushaf-*-android.apk

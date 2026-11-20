@@ -46,7 +46,7 @@ npm run build        # الناتج في dist/ — ارفعه على أي است
 npm run electron:start   # تجربة
 npm run electron:build   # إنشاء المثبّت في release/
 ```
-أو من صفحة الريبو: Releases ← Draft a new release ← اكتب وسم مثل `v1.0.0` (نفس رقم version في package.json) ← Publish، وسيبني `release.yml` نسخ ويندوز وماك ولينكس وملف APK ويرفعها في نفس الإصدار.
+**للنشر:** غيّر رقم `version` في `package.json` (مثلًا من `1.0.1` إلى `1.0.2`) وارفع التعديل على `main` — سيُنشأ إصدار جديد تلقائيًا ويُبنى فيه ويندوز (مثبّت + نسخة محمولة) وماك ولينكس وملف APK للأندرويد.
 
 ### ٣) الجوال (Capacitor)
 ```bash
