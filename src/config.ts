@@ -10,10 +10,12 @@ export const BRAND = {
   links: {
     appStore: '',
     googlePlay: '',
-    windows: '',
-    mac: '',
-    linux: '',
-    github: '',
+    windows: 'https://github.com/OSA98/mushaf/releases/latest',
+    mac: 'https://github.com/OSA98/mushaf/releases/latest',
+    linux: 'https://github.com/OSA98/mushaf/releases/latest',
+    android: 'https://github.com/OSA98/mushaf/releases/latest', // direct APK until the Google Play listing is live
+    web: 'https://osa98.github.io/mushaf/',
+    github: 'https://github.com/OSA98/mushaf',
   },
 }
 

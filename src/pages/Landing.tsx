@@ -123,7 +123,7 @@ export default function Landing() {
         <h2 className="h1 center">{t('appVersions')}</h2>
         <div className="versions">
           <Version icon="apple" title={ar ? 'أجهزة آبل (آيفون وآيباد)' : 'Apple devices (iPhone & iPad)'} href={BRAND.links.appStore} />
-          <Version icon="android" title={ar ? 'أجهزة أندرويد (الهواتف والأجهزة اللوحية)' : 'Android phones & tablets'} href={BRAND.links.googlePlay} />
+          <Version icon="android" title={ar ? 'أجهزة أندرويد (الهواتف والأجهزة اللوحية)' : 'Android phones & tablets'} href={BRAND.links.googlePlay || BRAND.links.android} />
           <Version icon="monitor" title={ar ? 'ويندوز' : 'Windows'} href={BRAND.links.windows} />
           <Version icon="monitor" title={ar ? 'ماك ولينكس' : 'macOS & Linux'} href={BRAND.links.mac || BRAND.links.linux} />
           <Version icon="globe" title={ar ? 'الموقع الإلكتروني' : 'Website'} href="/" internal />

@@ -20,7 +20,10 @@
     "ios": "npm run cap:sync && cap open ios",
     "icons": "bash scripts/make-icons.sh"
   },
-  "author": "",
+  "author": {
+    "name": "Osama Abdelnaser",
+    "email": "osa98@users.noreply.github.com"
+  },
   "license": "MIT",
   "dependencies": {
     "@capacitor/android": "^6.2.3",
@@ -72,7 +75,13 @@
     },
     "mac": {
       "target": [
-        "dmg"
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
       ],
       "category": "public.app-category.reference"
     },
@@ -81,12 +90,21 @@
         "AppImage",
         "deb"
       ],
-      "category": "Education"
+      "category": "Education",
+      "maintainer": "Osama Abdelnaser <osa98@users.noreply.github.com>"
     },
     "publish": [
       {
-        "provider": "github"
+        "provider": "github",
+        "owner": "OSA98",
+        "repo": "mushaf",
+        "releaseType": "release"
       }
     ]
+  },
+  "homepage": "https://osa98.github.io/mushaf/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OSA98/mushaf.git"
   }
 }
